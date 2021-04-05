@@ -11,11 +11,12 @@ int main()
 {
     char key;
 	vector<string> maze;
-	string fileName = "mazes\MAZE_01.TXT";
+	string fileName = "../mazes/MAZE_01.txt";
     
-    cout << "Press a key to load Maze 1!";
+    cout << "Press a key to load Maze 1: ";
     cin >> key;
 
 	fillVector(fileName, maze);
+    return 0;
 
 }
