@@ -1,22 +1,20 @@
-
-#include "file_reader.h"
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include <iomanip>
+#include <ios>
+#include <limits>
+#include "menu.h"
 
 using namespace std;
 
 int main()
 {
-    char key;
-	vector<string> maze;
-	string fileName = "../mazes/MAZE_01.txt";
-    
-    cout << "Press a key to load Maze 1: ";
-    cin >> key;
+    int menuOption = menu();
+    while(menuOption == 1)
+        menuOption = menu();
 
-	fillVector(fileName, maze);
+    if(menuOption == 0)
+        return 0;
+
+
     return 0;
-
 }
