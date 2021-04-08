@@ -26,7 +26,7 @@ int main()
     cout << "Press a key to load Maze 1: ";
     cin >> key;
 
-    fillVector(fileName, maze);
+    loadMaze(fileName, maze);
 
     return 0;
 }

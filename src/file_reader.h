@@ -6,6 +6,6 @@
 #include <string>
 #include <vector>
 
-void fillVector(std::string fileName, std::vector<std::string>& maze);
+void loadMaze(std::string fileName, std::vector<std::string>& maze);
 
 #endif

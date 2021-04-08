@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void fillVector(string fileName, vector<string>& maze)
+void loadMaze(string fileName, vector<string>& maze)
 
     // This function iterates over a .txt file
     // and fills the given vector with its lines.
