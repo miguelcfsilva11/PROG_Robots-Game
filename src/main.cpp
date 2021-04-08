@@ -2,11 +2,13 @@
 #include <iomanip>
 #include <ios>
 #include <limits>
-#include "menu.h"
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include "menu.h"
 #include "file_reader.h"
+#include "game.h"
 
 using namespace std;
 
@@ -22,11 +24,15 @@ int main()
     char key;
 	vector<string> maze;
 	string fileName = "MAZE_01.txt";
-
     cout << "Press a key to load Maze 1: ";
     cin >> key;
 
     loadMaze(fileName, maze);
+    
+    if (isAlive(maze))
+        cout << "Your player is alive and safe!" << endl;
+    else
+        cout << "Your player is dead meat." << endl;
 
     return 0;
 }
