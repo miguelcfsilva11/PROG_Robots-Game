@@ -8,4 +8,6 @@
 
 bool isAlive(std::vector<std::string>& maze);
 
+bool updateVector(std::vector<std::string>& maze, char key);
+
 #endif
