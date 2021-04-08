@@ -40,10 +40,11 @@ void displayRules()
 /**
 * Displays the menu screen and prompts the user to choose one of the options.
 * 
-* @return 0 when the user chooses to exit
-* @return 1 when the menu needs to be displayed again
-* @return 2 when the user chooses to play the game
+* @return 0 when the user chooses to exit.
+* @return 1 when the menu needs to be displayed again.
+* @return 2 when the user chooses to play the game.
 */
+
 int menu()
 {
     clearScreen();
