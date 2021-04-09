@@ -7,18 +7,17 @@
 
 using namespace std;
 
+/**
+* Checks whether the player is alive by evaluating 
+* his surroundings. In case he's in contact with either
+* a robot or a fence, then we must declare him dead.
+* 
+* @return true if the human is safe.
+* @return false in case there's either a robot or a fence touching him.
+*/
+
 bool isAlive(vector<string>& maze)
 {
-    /**
-    * Checks whether the player is alive by evaluating 
-    * his surroundings. In case he's in contact with either
-    * a robot or a fence, then we must declare him dead.
-    * 
-    * @return true if the human is safe.
-    * @return false in case there's either a robot or a fence touching him.
-    */
-
-
     int human_row, human_col; // Human's coordinates.
 
     for(int row = 0; row < maze.size(); row++){
@@ -76,6 +75,7 @@ bool isAlive(vector<string>& maze)
 * @return false if the user tried to move to an invalid position.
 * @return true if the user tried to move to a valid position.
 */
+
 bool updateVector(vector<string>& maze, char key)
 {
     int human_row, human_col; // Human's coordinates.
@@ -95,9 +95,11 @@ bool updateVector(vector<string>& maze, char key)
         }
     }
 
-    // Check which direction the user
+    // Check to which direction the user
     // wants to move and store it.
+
     int dir_row, dir_col;
+
     switch(key)
     {
         case 'Q':
@@ -140,11 +142,13 @@ bool updateVector(vector<string>& maze, char key)
 
     // Update the Human's coordinates
     // according to the direction.
+
     int new_human_row = human_row + dir_row;
     int new_human_col = human_col + dir_col;
 
     // Check whether the new position
     // is valid or invalid.
+
     if(maze[new_human_row][new_human_col] != ' ')
         return false;
 

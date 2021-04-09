@@ -5,11 +5,12 @@
 
 using namespace std;
 
+/**
+ * This function iterates over a .txt file
+ * and fills the given vector with its lines. 
+*/
+
 void loadMaze(string fileName, vector<string>& maze)
-
-    // This function iterates over a .txt file
-    // and fills the given vector with its lines.
-
 {
     ifstream file(fileName);
 
