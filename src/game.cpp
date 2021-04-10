@@ -4,20 +4,19 @@
 #include <vector>
 
 #include "game.h"
-
+#include "robots.h"
 using namespace std;
 
+
 /**
-* Checks whether the player is alive by evaluating 
-* his surroundings. In case he's in contact with either
-* a robot or a fence, then we must declare him dead.
-* 
-* @return true if the human is safe.
-* @return false in case there's either a robot or a fence touching him.
+* Looks for human's position on the maze and stores it.
+*
+* @return pair of integers with his coordinates.
 */
 
-bool isAlive(vector<string>& maze)
+pair <int, int> findHuman (vector<string>& maze)
 {
+
     int human_row, human_col; // Human's coordinates.
 
     for(int row = 0; row < maze.size(); row++){
@@ -34,6 +33,26 @@ bool isAlive(vector<string>& maze)
             }
         }
     }
+
+    return make_pair(human_row, human_col);
+}
+
+/**
+* Checks whether the player is alive by evaluating 
+* his surroundings. In case he's in contact with either
+* a robot or a fence, then we must declare him dead.
+* 
+* @return true if the human is safe.
+* @return false in case there's either a robot or a fence touching him.
+*/
+
+bool isAlive(vector<string>& maze)
+{
+    // Retrieve human's coordinates.
+
+    int human_row, human_col;
+    human_row =  findHuman(maze).first;
+    human_col =  findHuman(maze).second;
 
     // To check if he's in danger, we must evaluate
     // the squares that are above, underneath and next to him.
@@ -78,22 +97,11 @@ bool isAlive(vector<string>& maze)
 
 bool updateVector(vector<string>& maze, char key)
 {
-    int human_row, human_col; // Human's coordinates.
+    // Retrieve human's coordinates.
 
-    for(int row = 0; row < maze.size(); row++){
-        for(int col = 0; col < maze[row].size(); col++){
-            if (maze[row][col] == 'H'){
-                
-                // If we find the human, store his
-                // location in the following variables.
-
-                human_row = row;
-                human_col = col;
-                break;
-
-            }
-        }
-    }
+    int human_row, human_col;
+    human_row =  findHuman(maze).first;
+    human_col =  findHuman(maze).second;
 
     // Check to which direction the user
     // wants to move and store it.
