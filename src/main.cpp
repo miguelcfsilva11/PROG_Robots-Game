@@ -23,6 +23,7 @@ int main()
 
     char key;
 	vector<string> maze;
+    vector <pair<int, int>> robots;
 	string fileName = "MAZE_01.txt";
     cout << "Press a key to load Maze 1: ";
     cin >> key;
