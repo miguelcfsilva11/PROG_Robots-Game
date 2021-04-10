@@ -9,6 +9,13 @@
 using namespace std;
 
 
+
+/**
+* Updates robots' places in the maze, one by one.
+* 
+* @return
+*/
+
 void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
 {
     // Retrieve human's coordinates.
@@ -31,6 +38,12 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 // until the end of the game.
 
                 break;
+
+
+            // When updating their places, we need to make sure
+            // that they follow the shortest path possible to the human.
+            // To do so, we first need to check if moving in a diagonal
+            // would benefit the robot, as it covers more space.
 
 
             if (robot_row > human_row && robot_col > human_col) {
@@ -71,6 +84,9 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 }
 
             }
+
+            // If the diagonals are not optimal, the robot
+            // must trace a straight line to the user's position.
 
             else if (robot_row > human_row) {
                 if (maze[robot_row - 1][robot_col] != " ")
@@ -116,12 +132,25 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
     
 }
 
+/**
+* Searches for robots in the maze
+* stores their coordinates in a
+* vector of pairs.
+*
+* @return
+*/
+
 void findRobots (vector<string>& maze, vector<pair<int, int>>& robots)
 
 {
     for(int row = 0; row < maze.size(); row++){
         for(int col = 0; col < maze[row].size(); col++){
             if (maze[row][col] == 'R'){
+
+                // The robots' IDs will be the value of their
+                // respective index when stored in this vector
+                // this vector incremented by one.
+
                 robots.push_back((row, col))
 
 }
