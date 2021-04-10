@@ -28,8 +28,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
             // position to the human's and find
             // the most efficient path that leads to him.
 
-            robots[robots_id - 1][0] = robot_row;
-            robots[robots_id - 1][1] = robot_col;
+            robots[robot_id - 1][0] = robot_row;
+            robots[robot_id - 1][1] = robot_col;
 
             if (maze[robot_row][robot_col] == "r")
 
@@ -52,6 +52,12 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row - 1][robot_col - 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    // Updating their position on 'robots' vector.
+
+                    robots[robot_id - 1][0] = robot_row - 1;
+                    robots[robot_id - 1][1] = robot_col - 1;
+
                 }
             }
 
@@ -61,6 +67,9 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row + 1][robot_col + 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][0] = robot_row + 1;
+                    robots[robot_id - 1][1] = robot_col + 1;
                 }
 
             }
@@ -71,6 +80,9 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row + 1][robot_col - 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][0] = robot_row + 1;
+                    robots[robot_id - 1][1] = robot_col - 1;
                 }
 
             }
@@ -81,6 +93,9 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row - 1][robot_col + 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][0] = robot_row - 1;
+                    robots[robot_id - 1][1] = robot_col + 1;
                 }
 
             }
@@ -94,6 +109,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row - 1][robot_col] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][0] = robot_row - 1;
                 }
 
             }
@@ -104,6 +121,9 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row + 1][robot_col] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][0] = robot_row + 1;
+
                 }
 
             }
@@ -114,6 +134,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row][robot_col - 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][1] = robot_col - 1;
                 }
 
             }
@@ -124,6 +146,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
                 else{
                     maze[robot_row][robot_col + 1] = "R";
                     maze[robot_row][robot_col] = " ";
+
+                    robots[robot_id - 1][1] = robot_col + 1;
                 }
 
             }
