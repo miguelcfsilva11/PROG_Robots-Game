@@ -1,0 +1,6 @@
+Player         - Time
+----------------------
+Sara Moura     - 512
+Rui Sousa      - 513342
+Ana Silva      - 874
+Pedro Costa    - 901
