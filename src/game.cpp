@@ -95,7 +95,7 @@ bool isAlive(vector<string>& maze)
 * @return true if the user tried to move to a valid position.
 */
 
-bool updateVector(vector<string>& maze, char key)
+bool updateMaze(vector<string>& maze, char key)
 {
     // Retrieve human's coordinates.
 
