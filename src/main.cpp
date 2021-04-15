@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "file_reader.h"
 #include "game.h"
+#include "robots.h"
 
 using namespace std;
 
@@ -29,11 +30,30 @@ int main()
     cin >> key;
 
     loadMaze(fileName, maze);
-    
-    if (isAlive(maze))
-        cout << "Your player is alive and safe!" << endl;
-    else
-        cout << "Your player is dead meat." << endl;
+    findRobots(maze, robots);
+
+    cout << string(50, '\n');
+
+    while (isAlive(maze)){
+
+        cout << "      THE MAZE    " << endl;
+        for (auto i = 0; i < maze.size(); i++)
+            cout << maze[i] << endl;
+        
+        cout << "\nPick an direction: ";
+        cin >> key;
+        cout << string(50, '\n');
+
+        updateMaze(maze, key);
+        robotsMovement(maze, robots);
+
+    }
+
+    cout << "      THE MAZE    " << endl;
+    for (auto i = 0; i < maze.size(); i++)
+        cout << maze[i] << endl;
+    cout << "       You lost         " << endl;
+    cout << "Your player is dead meat." << endl;
 
     return 0;
 }
