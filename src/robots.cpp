@@ -177,6 +177,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
 void findRobots (vector<string>& maze, vector<pair<int, int>>& robots)
 
 {
+    robots.clear();
+
     for(int row = 0; row < maze.size(); row++){
         for(int col = 0; col < maze[row].size(); col++){
             if (maze[row][col] == 'R'){
