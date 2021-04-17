@@ -6,6 +6,12 @@
 
 using namespace std;
 
+/**
+* Writes to the high scores file.
+*
+* @param fileName The name of the file to write to.
+* @param highScoresVector A vector cointaining pairs with an high score entry composed by a name and a time.
+*/
 void writeHighScores(string fileName, const vector<pair<string, int>> highScoresVector)
 {
     ofstream file(fileName);
@@ -17,13 +23,24 @@ void writeHighScores(string fileName, const vector<pair<string, int>> highScores
     file.close();
 }
 
-// Driver function to sort the vector elements
-// by second element of pairs
+/** 
+* Driver function to sort the vector elements
+* by second element of pairs.
+*/
 bool sortBySec(const pair<string,int> &a, const pair<string,int> &b)
 {
     return (a.second < b.second);
 }
 
+/**
+* Adds a new high score pair to
+* the vector containing the high scores
+* and sorts it in ascending order.
+*
+* @param highScoresVector A vector cointaining pairs with an high score entry composed by a name and a time.
+* @param name A string with the name of the user who beat the game.
+* @param time An integer with the time to beat the game.
+*/
 void addHighScore(vector<pair<string, int>>& highScoresVector, string name, int time)
 {
     pair<string, int> highScore;
