@@ -36,10 +36,5 @@ int main()
     else
         cout << "Your player is dead meat." << endl;
 
-    vector<pair<string, int>> highScores;
-    readHighScores("MAZE_01_WINNERS.TXT", highScores);
-    addHighScore(highScores, "gang           ", 1000);
-    writeHighScores("MAZE_01_WINNERS.TXT", highScores);
-
     return 0;
 }
