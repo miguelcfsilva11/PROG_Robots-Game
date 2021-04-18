@@ -17,16 +17,16 @@ using namespace std;
 int main()
 {
     int menuOption = menu();
-    while(menuOption == 1)
+    while (menuOption == 1)
         menuOption = menu();
 
-    if(menuOption == 0)
+    if (menuOption == 0)
         return 0;
 
     char key;
 
 	vector <string> maze;
-  vector <pair<int, int>> robots;
+    vector <pair<int, int>> robots;
 
 	string fileName = "MAZE_01.txt";
     cout << "Press a key to load Maze 1: ";
@@ -69,4 +69,5 @@ int main()
     cout << "Your player is dead meat!" << endl;
 
     return 0;
+    
 }
