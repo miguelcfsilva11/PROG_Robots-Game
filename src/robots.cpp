@@ -19,7 +19,7 @@ using namespace std;
 void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
 {
     // Retrieve human's coordinates.
-
+        
     int human_row, human_col;
     human_row =  findHuman(maze).first;
     human_col =  findHuman(maze).second;
@@ -32,8 +32,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         // position to the human's and find
         // the most efficient path that leads to him.
 
-        robots[robot_id - 1].first = robot_row;
-        robots[robot_id - 1].second = robot_col;
+        robot_row = robots[robot_id - 1].first;
+        robot_col = robots[robot_id - 1].second;
 
         if (maze[robot_row][robot_col] == 'r')
 
@@ -177,6 +177,8 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
 void findRobots (vector<string>& maze, vector<pair<int, int>>& robots)
 
 {
+    robots.clear();
+
     for(int row = 0; row < maze.size(); row++){
         for(int col = 0; col < maze[row].size(); col++){
             if (maze[row][col] == 'R'){
