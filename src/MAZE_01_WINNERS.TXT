@@ -1,0 +1,7 @@
+Player         - Time
+----------------------
+Sara Moura     - 512
+Ana Silva      - 874
+Pedro Costa    - 901
+gang           - 1000
+Rui Sousa      - 513342

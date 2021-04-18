@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "file_reader.h"
 #include "game.h"
+#include "high_score.h"
 #include "robots.h"
 
 using namespace std;
@@ -25,7 +26,7 @@ int main()
     char key;
 
 	vector <string> maze;
-    vector <pair<int, int>> robots;
+  vector <pair<int, int>> robots;
 
 	string fileName = "MAZE_01.txt";
     cout << "Press a key to load Maze 1: ";
