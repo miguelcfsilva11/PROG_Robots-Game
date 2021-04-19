@@ -51,8 +51,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
 
 
         if (robot_row > human_row && robot_col > human_col) {
-            if (maze[robot_row - 1][robot_col - 1] != ' ')
+            if (maze[robot_row - 1][robot_col - 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+
+            else if (maze[robot_row - 1][robot_col - 1] == '*'){
+                maze[robot_row - 1][robot_col - 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row - 1][robot_col - 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -66,8 +72,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
             }
 
         else if (robot_row < human_row && robot_col < human_col) {
-            if (maze[robot_row + 1][robot_col + 1] != ' ')
+            if (maze[robot_row + 1][robot_col + 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+
+            else if (maze[robot_row + 1][robot_col + 1] == '*'){
+                maze[robot_row + 1][robot_col + 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row + 1][robot_col + 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -80,8 +92,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         }
 
         else if (robot_row < human_row && robot_col > human_col) {
-            if (maze[robot_row + 1][robot_col - 1] != ' ')
+            if (maze[robot_row + 1][robot_col - 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+
+            else if (maze[robot_row + 1][robot_col - 1] == '*'){
+                maze[robot_row + 1][robot_col - 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row + 1][robot_col - 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -94,8 +112,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         }
 
         else if (robot_row > human_row && robot_col < human_col) {
-            if (maze[robot_row - 1][robot_col + 1] != ' ')
+            if (maze[robot_row - 1][robot_col + 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+            
+            else if (maze[robot_row - 1][robot_col + 1] == '*'){
+                maze[robot_row - 1][robot_col + 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row - 1][robot_col + 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -111,8 +135,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         // must trace a straight line to the user's position.
 
         else if (robot_row > human_row) {
-            if (maze[robot_row - 1][robot_col] != ' ')
+            if (maze[robot_row - 1][robot_col] == 'r')
                 maze[robot_row][robot_col] = 'r';
+            
+            else if (maze[robot_row - 1][robot_col] == '*'){
+                maze[robot_row - 1][robot_col] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row - 1][robot_col] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -124,8 +154,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         }
         
         else if (robot_row < human_row) {
-            if (maze[robot_row + 1][robot_col] != ' ')
+            if (maze[robot_row + 1][robot_col] == 'r')
                 maze[robot_row][robot_col] = 'r';
+
+            else if (maze[robot_row + 1][robot_col] == '*'){
+                maze[robot_row + 1][robot_col] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row + 1][robot_col] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -137,8 +173,13 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         }
 
         else if (robot_col > human_col) {
-            if (maze[robot_row][robot_col - 1] != ' ')
+            if (maze[robot_row][robot_col - 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+            
+            else if (maze[robot_row][robot_col - 1] == '*'){
+                maze[robot_row][robot_col - 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
             else{
                 maze[robot_row][robot_col - 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
@@ -150,8 +191,14 @@ void robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
         }
 
         else if (robot_col < human_col) {
-            if (maze[robot_row][robot_col + 1] != ' ')
+            if (maze[robot_row][robot_col + 1] == 'r')
                 maze[robot_row][robot_col] = 'r';
+            
+            else if (maze[robot_row][robot_col + 1] == '*'){
+                maze[robot_row][robot_col + 1] = 'r';
+                maze[robot_row][robot_col] = ' ';
+            }
+
             else{
                 maze[robot_row][robot_col + 1] = 'R';
                 maze[robot_row][robot_col] = ' ';
