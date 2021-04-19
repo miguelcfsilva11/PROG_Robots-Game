@@ -35,8 +35,6 @@ int main()
     loadMaze(fileName, maze);
     findRobots(maze, robots);
 
-    cout << string(50, '\n');
-
     while (isAlive(maze)){
 
         cout << "      THE MAZE    " << endl;
@@ -45,8 +43,7 @@ int main()
         
         cout << "\nPick an direction: ";
         cin >> key;
-        cout << string(50, '\n');
-
+        
         updateMaze(maze, key);
         robotsMovement(maze, robots);
         findRobots(maze, robots);
