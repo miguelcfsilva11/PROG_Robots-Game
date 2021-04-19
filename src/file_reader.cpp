@@ -17,11 +17,12 @@ void loadMaze(string fileName, vector<string>& maze)
     // Open the file and checks
     // whether it's a valid object.
 
-    if (!file)
+    if (file.fail())
     {
         cerr << "Couldn't open the following file : " << fileName << endl;
     }
     string row;
+    
     while (getline(file, row))
     {
         maze.push_back(row);
