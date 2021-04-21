@@ -50,10 +50,6 @@ int main()
             continue;
         }
         robotsMovement(maze, robots);
-
-        if (findHuman(maze) == make_pair(-1,-1))
-            break;
-
         findRobots(maze, robots);
         
         if (robots.size() == 0){
