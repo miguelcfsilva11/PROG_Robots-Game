@@ -61,29 +61,37 @@ bool isAlive(vector<string>& maze)
     human_row =  findHuman(maze).first;
     human_col =  findHuman(maze).second;
 
+    if (human_row == -1 && human_col == -1)
+
+        // In case our human has been captured by the remanining robots
+        // the 'findHuman' function returns the pair (-1, -1). In those
+        // circumstances, we must declare our player as dead.
+
+        return false;
+
     // To check if he's in danger, we must evaluate
     // the squares that are above, underneath and next to him.
     
     if (human_row != maze.size()-1)
 
-        // We may only verify if there are enemies beneath him
+        // We may only verify if there are fences beneath him
         // in case he is not at the lowest row of the maze, in order words,
         // when the 'H' character is not on the last stored string.
         // This same logic applies to the conditionals that follow.
 
-        if (maze[human_row + 1][human_col] == 'R' || maze[human_row + 1][human_col] == '*')
+        if (maze[human_row + 1][human_col] == '*')
             return false;
 
     if (human_row != 0)
-        if (maze[human_row - 1][human_col] == 'R' || maze[human_row - 1][human_col] == '*')
+        if (maze[human_row - 1][human_col] == '*')
             return false;
 
     if (human_col != maze[human_row].size()-1)
-        if (maze[human_row][human_col + 1] == 'R' || maze[human_row][human_col + 1] == '*')
+        if (maze[human_row][human_col + 1] == '*')
             return false;
 
     if (human_col != 0)
-        if (maze[human_row][human_col - 1] == 'R' || maze[human_row][human_col - 1] == '*')
+        if (maze[human_row][human_col - 1] == '*')
             return false;
 
     return true;
@@ -153,6 +161,7 @@ bool updateMaze(vector<string>& maze, char key)
             dir_row = 1;
             dir_col = 1;
             break;
+            
         default:
             return false;
     }
