@@ -166,7 +166,7 @@ bool updateMaze(vector<string>& maze, char key)
     // Check whether the new position
     // is valid or invalid.
 
-    if(maze[new_human_row][new_human_col] != ' ')
+    if(maze[new_human_row][new_human_col] != ' ' && maze[new_human_row][new_human_col] != 'H')
         return false;
 
     // Update the maze.

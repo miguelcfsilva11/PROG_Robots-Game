@@ -41,7 +41,7 @@ int main()
         for (auto i = 0; i < maze.size(); i++)
             cout << maze[i] << endl;
         
-        cout << "\nPick an direction: ";
+        cout << "\nPick a direction: ";
         cin >> key;
         
         if(!updateMaze(maze, toupper(key)))
