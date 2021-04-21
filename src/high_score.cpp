@@ -6,6 +6,8 @@
 
 using namespace std;
 
+/******************************************************************************/
+
 /**
 * Writes to the high scores file.
 *
@@ -23,6 +25,8 @@ void writeHighScores(string fileName, const vector<pair<string, int>> highScores
     file.close();
 }
 
+/******************************************************************************/
+
 /** 
 * Driver function to sort the vector elements
 * by second element of pairs.
@@ -31,6 +35,8 @@ bool sortBySec(const pair<string,int> &a, const pair<string,int> &b)
 {
     return (a.second < b.second);
 }
+
+/******************************************************************************/
 
 /**
 * Adds a new high score pair to
@@ -49,6 +55,8 @@ void addHighScore(vector<pair<string, int>>& highScoresVector, string name, int 
     highScoresVector.push_back(highScore);
     sort(highScoresVector.begin(), highScoresVector.end(), sortBySec);
 }
+
+/******************************************************************************/
 
 /**
 * Reads the high scores from a given file and stores a pair of

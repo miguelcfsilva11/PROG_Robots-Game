@@ -7,6 +7,8 @@ using namespace std;
 
 int menu();
 
+/******************************************************************************/
+
 /**
 * Clears the screen by outputting 100 new lines.
 */
@@ -17,6 +19,8 @@ void clearScreen()
         cout << "\n\n\n\n\n\n\n\n\n\n";
     }
 }
+
+/******************************************************************************/
 
 /**
 * Displays the rules of the game.
@@ -36,6 +40,8 @@ void displayRules()
 
     getchar();
 }
+
+/******************************************************************************/
 
 /**
 * Displays the menu screen and prompts the user to choose one of the options.

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+/******************************************************************************/
+
 /**
  * This function iterates over a .txt file
  * and fills the given vector with its lines. 

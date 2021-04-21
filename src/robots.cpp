@@ -10,6 +10,8 @@ using namespace std;
 
 
 
+/******************************************************************************/
+
 /**
 * Updates robots' places in the maze, one by one.
 * 
@@ -273,6 +275,8 @@ int robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
     return 0;
     
 }
+
+/******************************************************************************/
 
 /**
 * Searches for robots in the maze

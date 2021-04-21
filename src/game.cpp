@@ -7,6 +7,7 @@
 #include "robots.h"
 using namespace std;
 
+/******************************************************************************/
 
 /**
 * Looks for human's position on the maze and stores it.
@@ -43,6 +44,8 @@ pair <int, int> findHuman (vector<string>& maze)
     else
         return make_pair(human_row, human_col);
 }
+
+/******************************************************************************/
 
 /**
 * Checks whether the player is alive by evaluating 
@@ -97,6 +100,8 @@ bool isAlive(vector<string>& maze)
     return true;
 
 }
+
+/******************************************************************************/
 
 /**
 * If possible, updates the coordinates
