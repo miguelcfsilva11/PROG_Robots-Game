@@ -17,15 +17,23 @@ void loadMaze(string fileName, vector<string>& maze)
     // Open the file and checks
     // whether it's a valid object.
 
-    if (file.fail())
+    if (!file)
     {
         cerr << "Couldn't open the following file : " << fileName << endl;
     }
+
     string row;
-    
+    int row_number = 0;
+
     while (getline(file, row))
     {
+        if (row_number < 1){
+            row_number++;
+            continue;
+        }
+        
         maze.push_back(row);
+        row_number++;
     }
 
     // Deallocate the resources needed to open
