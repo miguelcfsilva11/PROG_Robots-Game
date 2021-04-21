@@ -13,7 +13,7 @@ using namespace std;
 /**
 * Updates robots' places in the maze, one by one.
 * 
-* @return
+* @return 0 if every robot has moved atleast once or when the human has been captured.
 */
 
 int robotsMovement (vector<string>& maze, vector<pair<int, int>>& robots)
