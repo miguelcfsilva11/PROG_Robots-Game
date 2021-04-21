@@ -153,6 +153,8 @@ bool updateMaze(vector<string>& maze, char key)
             dir_row = 1;
             dir_col = 1;
             break;
+        default:
+            return false;
     }
 
     // Update the Human's coordinates

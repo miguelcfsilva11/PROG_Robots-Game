@@ -28,7 +28,7 @@ int main()
 	vector <string> maze;
     vector <pair<int, int>> robots;
 
-	string fileName = "MAZE_01.txt";
+	string fileName = "MAZE_01.TXT";
     cout << "Press a key to load Maze 1: ";
     cin >> key;
 
@@ -44,7 +44,11 @@ int main()
         cout << "\nPick an direction: ";
         cin >> key;
         
-        updateMaze(maze, key);
+        if(!updateMaze(maze, toupper(key)))
+        {
+            cout << "Invalid move! Please pick a different direction." << endl;
+            continue;
+        }
         robotsMovement(maze, robots);
 
         if (findHuman(maze) == make_pair(-1,-1))
@@ -59,7 +63,6 @@ int main()
             cout << "       You won!         " << endl;
             cout << "You killed all the robots!" << endl;
             return 0;
-        
         }
     }
 
