@@ -18,13 +18,17 @@ pair <int, int> findHuman (vector<string>& maze)
 {
 
     int human_row, human_col; // Human's coordinates.
+    bool humanFound = false;
 
     for(int row = 0; row < maze.size(); row++){
         for(int col = 0; col < maze[row].size(); col++){
             if (maze[row][col] == 'H'){
                 
                 // If we find the human, store his
-                // location in the following variables.
+                // location in the following variables
+                // and update humanFound's value.
+
+                humanFound = true;
 
                 human_row = row;
                 human_col = col;
@@ -34,7 +38,10 @@ pair <int, int> findHuman (vector<string>& maze)
         }
     }
 
-    return make_pair(human_row, human_col);
+    if (!humanFound)
+        return make_pair(-1,-1);
+    else
+        return make_pair(human_row, human_col);
 }
 
 /**
