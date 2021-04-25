@@ -64,6 +64,8 @@ int main()
 
             int secondsToWin = difftime(time(0), startTime);
             
+            const int MAX_NAME_LENGTH = 3;
+
             // Get user name
             string playerName;
             bool lengthLimit = false;
@@ -72,7 +74,7 @@ int main()
                 cout << "Enter your name (up to 15 characters): ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, playerName);
-                if(playerName.length() > 15)
+                if(playerName.length() > MAX_NAME_LENGTH)
                     cout << "Please enter a shorter name!" << endl;
                 else
                     lengthLimit = true;
@@ -89,7 +91,7 @@ int main()
             else
                 createFile(highScoresFilename);
 
-            playerName += string(15 - playerName.length(), ' ');
+            playerName += string(MAX_NAME_LENGTH - playerName.length(), ' ');
 
             vector<pair<string, int>> highScoresVector;
             readHighScores(highScoresFilename, highScoresVector);
