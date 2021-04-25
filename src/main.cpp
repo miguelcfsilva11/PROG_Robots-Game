@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <time.h>
 
 #include "menu.h"
 #include "file_reader.h"
@@ -35,6 +36,8 @@ int main()
     loadMaze(fileName, maze);
     findRobots(maze, robots);
 
+    time_t startTime = time(0);
+
     while (isAlive(maze)){
 
         cout << "      THE MAZE    " << endl;
@@ -58,6 +61,41 @@ int main()
                 cout << maze[i] << endl;
             cout << "       You won!         " << endl;
             cout << "You killed all the robots!" << endl;
+
+            int secondsToWin = difftime(time(0), startTime);
+            
+            // Get user name
+            string playerName;
+            bool lengthLimit = false;
+            while(!lengthLimit)
+            {
+                cout << "Enter your name (up to 15 characters): ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, playerName);
+                if(playerName.length() > 15)
+                    cout << "Please enter a shorter name!" << endl;
+                else
+                    lengthLimit = true;
+            }
+
+            string highScoresFilename = "MAZE_01_WINNERS.TXT";
+
+            // Check if the file exists and
+            // create it if it doesn't
+            ifstream highScoresFile;
+            highScoresFile.open(highScoresFilename);
+            if(highScoresFile)
+                highScoresFile.close();
+            else
+                createFile(highScoresFilename);
+
+            playerName += string(15 - playerName.length(), ' ');
+
+            vector<pair<string, int>> highScoresVector;
+            readHighScores(highScoresFilename, highScoresVector);
+            addHighScore(highScoresVector, playerName, secondsToWin);
+            writeHighScores(highScoresFilename, highScoresVector);
+
             return 0;
         }
     }
