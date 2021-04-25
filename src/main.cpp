@@ -64,7 +64,7 @@ int main()
 
             int secondsToWin = difftime(time(0), startTime);
             
-            const int MAX_NAME_LENGTH = 3;
+            const int MAX_NAME_LENGTH = 15;
 
             // Get user name
             string playerName;
