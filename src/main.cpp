@@ -46,6 +46,7 @@ int main()
         
         cout << "\nPick a direction: ";
         cin >> key;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
         if(!updateMaze(maze, toupper(key)))
         {
@@ -64,18 +65,30 @@ int main()
 
             int secondsToWin = difftime(time(0), startTime);
             
-            // Get user name
+            const int MAX_NAME_LENGTH = 15;
+
+            // Get the user's name
             string playerName;
-            bool lengthLimit = false;
-            while(!lengthLimit)
+            bool validName = false;
+            while(!validName)
             {
                 cout << "Enter your name (up to 15 characters): ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, playerName);
-                if(playerName.length() > 15)
+                if(playerName.length() > MAX_NAME_LENGTH)
                     cout << "Please enter a shorter name!" << endl;
                 else
-                    lengthLimit = true;
+                    {
+                        validName = true;
+                        for(int i = 0; playerName[i]; i++)
+                        {
+                            if(!isascii(playerName[i]))
+                            {
+                                validName = false;
+                                cout << "Please don't enter a name with invalid characters!" << endl;
+                                break;
+                            }
+                        }
+                    }
             }
 
             string highScoresFilename = "MAZE_01_WINNERS.TXT";
@@ -89,7 +102,7 @@ int main()
             else
                 createFile(highScoresFilename);
 
-            playerName += string(15 - playerName.length(), ' ');
+            playerName += string(MAX_NAME_LENGTH - playerName.length(), ' ');
 
             vector<pair<string, int>> highScoresVector;
             readHighScores(highScoresFilename, highScoresVector);
