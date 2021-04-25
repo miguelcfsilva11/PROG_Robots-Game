@@ -46,6 +46,7 @@ int main()
         
         cout << "\nPick a direction: ";
         cin >> key;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
         if(!updateMaze(maze, toupper(key)))
         {
@@ -64,20 +65,30 @@ int main()
 
             int secondsToWin = difftime(time(0), startTime);
             
-            const int MAX_NAME_LENGTH = 3;
+            const int MAX_NAME_LENGTH = 15;
 
-            // Get user name
+            // Get the user's name
             string playerName;
-            bool lengthLimit = false;
-            while(!lengthLimit)
+            bool validName = false;
+            while(!validName)
             {
                 cout << "Enter your name (up to 15 characters): ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, playerName);
                 if(playerName.length() > MAX_NAME_LENGTH)
                     cout << "Please enter a shorter name!" << endl;
                 else
-                    lengthLimit = true;
+                    {
+                        validName = true;
+                        for(int i = 0; playerName[i]; i++)
+                        {
+                            if(!isascii(playerName[i]))
+                            {
+                                validName = false;
+                                cout << "Please don't enter a name with invalid characters!" << endl;
+                                break;
+                            }
+                        }
+                    }
             }
 
             string highScoresFilename = "MAZE_01_WINNERS.TXT";
