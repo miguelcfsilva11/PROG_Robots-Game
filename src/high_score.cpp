@@ -87,3 +87,15 @@ void readHighScores(string fileName, vector<pair<string, int>>& highScoresVector
 
     }
 }
+
+/**
+* Creates an high scores file.
+*
+* @param filename The name of the file to be created.
+*/
+void createFile(std::string filename)
+{
+    ofstream file(filename);
+    file << "Player         - Time\n----------------------\n";
+    file.close();
+}
