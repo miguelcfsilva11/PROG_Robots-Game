@@ -45,10 +45,28 @@ int main()
             cout << maze[i] << endl;
         
         cout << "\nPick a direction: ";
-        cin >> key;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        char direction;
+        cin >> direction;
+
+        // Checking for and dealing with invalid input.
+        if(cin.fail())
+        {
+            if(cin.eof())
+                // Exit the program.
+                return 0;
+            else
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid move! Please pick a different direction." << endl;
+                continue;
+            }
+        }
+        else 
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
         
-        if(!updateMaze(maze, toupper(key)))
+        if(!updateMaze(maze, toupper(direction)))
         {
             cout << "Invalid move! Please pick a different direction." << endl;
             continue;
