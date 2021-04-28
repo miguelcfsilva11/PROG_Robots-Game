@@ -162,7 +162,7 @@ int main()
                 validName = true;
             }
 
-            string highScoresFilename = filename.substr(0,7) + "_WINNERS.TXT"
+            string highScoresFilename = fileName.substr(0,7) + "_WINNERS.TXT";
 
             // Check if the file exists and
             // create it if it doesn't
