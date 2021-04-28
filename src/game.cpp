@@ -74,28 +74,18 @@ bool isAlive(vector<string>& maze)
 
     // To check if he's in danger, we must evaluate
     // the squares that are above, underneath and next to him.
-    
-    if (human_row != maze.size()-1)
 
-        // We may only verify if there are fences beneath him
-        // in case he is not at the lowest row of the maze, in order words,
-        // when the 'H' character is not on the last stored string.
-        // This same logic applies to the conditionals that follow.
+    if (maze[human_row + 1][human_col] == '*')
+        return false;
 
-        if (maze[human_row + 1][human_col] == '*')
-            return false;
+    if (maze[human_row - 1][human_col] == '*')
+        return false;
 
-    if (human_row != 0)
-        if (maze[human_row - 1][human_col] == '*')
-            return false;
+    if (maze[human_row][human_col + 1] == '*')
+        return false;
 
-    if (human_col != maze[human_row].size()-1)
-        if (maze[human_row][human_col + 1] == '*')
-            return false;
-
-    if (human_col != 0)
-        if (maze[human_row][human_col - 1] == '*')
-            return false;
+    if (maze[human_row][human_col - 1] == '*')
+        return false;
 
     return true;
 
