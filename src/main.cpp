@@ -26,7 +26,7 @@ int main()
 
     char key;
     int maze_number;
-    bool mazeLoaded;
+    bool mazeLoaded = false;
     string fileName;
 
 	vector <string> maze;
@@ -54,7 +54,15 @@ int main()
         }
 
         else 
+        {
+            if(cin.peek() != '\n')
+            {
+                cout << "Pick a valid number: ";
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                continue;
+            }
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
 
         if (maze_number >= 10)
             fileName = "MAZE_" + to_string(maze_number) + ".TXT";
@@ -102,7 +110,15 @@ int main()
             }
         }
         else 
+        {
+            if(cin.peek() != '\n')
+            {
+                cout << "Pick a valid direction!";
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                continue;
+            }
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        }
 
         
         if(!updateMaze(maze, toupper(direction)))

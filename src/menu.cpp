@@ -77,7 +77,14 @@ int menu()
         }
     }
     else 
+    {
+        if(cin.peek() != '\n')
+            {
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                return 1;
+            }
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    }
 
     // Reacting to valid user input.
     switch(userChoice)
