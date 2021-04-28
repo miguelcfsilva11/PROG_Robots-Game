@@ -70,25 +70,39 @@ int main()
             // Get the user's name
             string playerName;
             bool validName = false;
+            int nameLength;
             while(!validName)
             {
                 cout << "Enter your name (up to 15 characters): ";
                 getline(cin, playerName);
-                if(playerName.length() > MAX_NAME_LENGTH)
-                    cout << "Please enter a shorter name!" << endl;
-                else
+                int nonAsciiChars = 0;
+                nameLength = 0;
+                bool hyphenChar = false;
+
+                for(int i = 0; playerName[i]; i++)
+                {
+                    if(int(playerName[i]) >= 0)
+                        nameLength++;
+                    else
+                        nonAsciiChars++;
+                    if(playerName[i] == '-')
                     {
-                        validName = true;
-                        for(int i = 0; playerName[i]; i++)
-                        {
-                            if(!isascii(playerName[i]))
-                            {
-                                validName = false;
-                                cout << "Please don't enter a name with invalid characters!" << endl;
-                                break;
-                            }
-                        }
+                        hyphenChar = true;
+                        break;
                     }
+                }
+                nameLength += nonAsciiChars / 2;
+                if(nameLength > 15)
+                {
+                    cout << "Please enter a shorter name!" << endl;
+                    continue;
+                }
+                if(hyphenChar)
+                {
+                    cout << "Please don't enter a name with a '-'" << endl;
+                    continue;
+                }
+                validName = true;
             }
 
             string highScoresFilename = "MAZE_01_WINNERS.TXT";
@@ -102,7 +116,7 @@ int main()
             else
                 createFile(highScoresFilename);
 
-            playerName += string(MAX_NAME_LENGTH - playerName.length(), ' ');
+            playerName += string(MAX_NAME_LENGTH - nameLength, ' ');
 
             vector<pair<string, int>> highScoresVector;
             readHighScores(highScoresFilename, highScoresVector);

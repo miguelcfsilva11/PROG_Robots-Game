@@ -79,8 +79,9 @@ void readHighScores(string fileName, vector<pair<string, int>>& highScoresVector
             continue;
         }
 
-        highScore.first = line.substr(0, 15);
-        highScore.second = stoi(line.substr(17));
+        int separator = line.find('-');
+        highScore.first = line.substr(0, separator);
+        highScore.second = stoi(line.substr(separator + 2));
         highScoresVector.push_back(highScore);
 
         i++;
