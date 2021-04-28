@@ -25,15 +25,54 @@ int main()
         return 0;
 
     char key;
+    int maze_number;
+    bool mazeLoaded;
+    string fileName;
 
 	vector <string> maze;
     vector <pair<int, int>> robots;
 
-	string fileName = "MAZE_01.TXT";
-    cout << "Press a key to load Maze 1: ";
-    cin >> key;
+    cout << "Choose the number of the maze you wish to challenge: ";
 
-    loadMaze(fileName, maze);
+    while(!mazeLoaded)
+    {
+        cin >> maze_number;
+        
+        // Checking for and dealing with invalid input.
+        
+        if(cin.fail())
+        {
+            if(cin.eof())
+                return 0;
+            else
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Pick a valid number: ";
+                continue;
+            }
+        }
+
+        else 
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
+        if (maze_number >= 10)
+            fileName = "MAZE_" + to_string(maze_number) + ".TXT";
+        else
+            fileName = "MAZE_0" + to_string(maze_number) + ".TXT";
+    
+        if (!loadMaze(fileName, maze)){
+
+            cout << "Choose a valid maze number: ";
+            continue;
+        }
+
+        mazeLoaded = true;
+    }
+
+    cout << "Press enter to start Maze " << maze_number << ": ";
+    getchar();
+
     findRobots(maze, robots);
 
     time_t startTime = time(0);
@@ -105,10 +144,11 @@ int main()
                 validName = true;
             }
 
-            string highScoresFilename = "MAZE_01_WINNERS.TXT";
+            string highScoresFilename = filename.substr(0,7) + "_WINNERS.TXT"
 
             // Check if the file exists and
             // create it if it doesn't
+            
             ifstream highScoresFile;
             highScoresFile.open(highScoresFilename);
             if(highScoresFile)
