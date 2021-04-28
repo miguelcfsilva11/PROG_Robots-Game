@@ -6,6 +6,6 @@
 #include <string>
 #include <vector>
 
-void loadMaze(std::string fileName, std::vector<std::string>& maze);
+bool loadMaze(std::string fileName, std::vector<std::string>& maze);
 
 #endif

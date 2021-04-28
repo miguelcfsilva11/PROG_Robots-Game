@@ -12,7 +12,7 @@ using namespace std;
  * and fills the given vector with its lines. 
 */
 
-void loadMaze(string fileName, vector<string>& maze)
+bool loadMaze(string fileName, vector<string>& maze)
 {
     ifstream file(fileName);
 
@@ -22,6 +22,7 @@ void loadMaze(string fileName, vector<string>& maze)
     if (!file)
     {
         cerr << "Couldn't open the following file : " << fileName << endl;
+        return false;
     }
 
     string row;
@@ -43,4 +44,6 @@ void loadMaze(string fileName, vector<string>& maze)
     // function.
 
     file.close();
+
+    return true;
 }
