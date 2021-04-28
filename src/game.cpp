@@ -14,7 +14,6 @@ using namespace std;
 *
 * @return pair of integers with his coordinates.
 */
-
 pair <int, int> findHuman (vector<string>& maze)
 {
 
@@ -55,7 +54,6 @@ pair <int, int> findHuman (vector<string>& maze)
 * @return true if the human is safe.
 * @return false in case there's either a robot or a fence touching him.
 */
-
 bool isAlive(vector<string>& maze)
 {
     // Retrieve human's coordinates.
@@ -104,7 +102,6 @@ bool isAlive(vector<string>& maze)
 * @return false if the user tried to move to an invalid position.
 * @return true if the user tried to move to a valid position.
 */
-
 bool updateMaze(vector<string>& maze, char key)
 {
     // Retrieve human's coordinates.
