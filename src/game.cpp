@@ -152,7 +152,7 @@ bool updateMaze(vector<string>& maze, char key)
     int new_human_col = human_col + dir_col;
 
     // Check whether the new position
-    // is valid or invalid.
+    // results in the player's death.
 
     if(maze[new_human_row][new_human_col] != ' ' && maze[new_human_row][new_human_col] != 'H'){
 
