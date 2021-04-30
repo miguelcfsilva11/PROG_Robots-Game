@@ -129,7 +129,7 @@ int main()
         robotsMovement(maze, robots);
         findRobots(maze, robots);
         
-        if (robots.size() == 0){
+        if (robots.size() == 0 && isAlive(maze)){
             cout << "      THE MAZE    " << endl;
             for (auto i = 0; i < maze.size(); i++)
                 cout << maze[i] << endl;
