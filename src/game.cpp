@@ -52,7 +52,7 @@ pair <int, int> findHuman (vector<string>& maze)
 * a robot or a fence, then we must declare him dead.
 * 
 * @return true if the human is safe.
-* @return false in case there's either a robot or a fence touching him.
+* @return false in case he moved to the place of either a robot or a fence.
 */
 bool isAlive(vector<string>& maze)
 {
@@ -63,6 +63,7 @@ bool isAlive(vector<string>& maze)
     human_col =  findHuman(maze).second;
 
     if (human_row == -1 && human_col == -1)
+
     {
 
         // In case our human has been captured by the remanining robots
@@ -70,40 +71,9 @@ bool isAlive(vector<string>& maze)
         // circumstances, we must declare our player as dead.
 
         return false;
-
-    }
-
-    // To check if he's in danger, we must evaluate
-    // the squares that are above, underneath and next to him.
-    // If we find him next to an eletric fence, meaning that he collided
-    // with it, update his 'H' to an 'h' and declare him dead. 
-
-    if (maze[human_row + 1][human_col] == '*')
-    {
-        maze[human_row][human_col] = 'h';
-        return false;
-    }
-
-    if (maze[human_row - 1][human_col] == '*')
-    {
-        maze[human_row][human_col] = 'h';
-        return false;
-    }
-
-    if (maze[human_row][human_col + 1] == '*')
-    {
-        maze[human_row][human_col] = 'h';
-        return false;
-    }
-
-    if (maze[human_row][human_col - 1] == '*')
-    {
-        maze[human_row][human_col] = 'h';
-        return false;
     }
 
     return true;
-
 }
 
 /******************************************************************************/
@@ -116,7 +86,7 @@ bool isAlive(vector<string>& maze)
 * @param maze A vector containing information regarding the maze.
 * @param key A character which determines the direction the user is trying to move.
 *
-* @return false if the user tried to move to an invalid position.
+* @return false if the user moves to the place of an eletric fence or robot.
 * @return true if the user tried to move to a valid position.
 */
 bool updateMaze(vector<string>& maze, char key)
@@ -184,10 +154,15 @@ bool updateMaze(vector<string>& maze, char key)
     // Check whether the new position
     // is valid or invalid.
 
-    if(maze[new_human_row][new_human_col] != ' ' && maze[new_human_row][new_human_col] != 'H')
+    if(maze[new_human_row][new_human_col] != ' ' && maze[new_human_row][new_human_col] != 'H'){
+
+        maze[new_human_row][new_human_col] = 'h';
+        maze[human_row][human_col] = ' ';
         return false;
+    }
 
     // Update the maze.
+
     maze[human_row][human_col] = ' ';
     maze[new_human_row][new_human_col] = 'H';
 

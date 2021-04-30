@@ -96,11 +96,15 @@ int main()
         cin >> direction;
 
         // Checking for and dealing with invalid input.
+
         if(cin.fail())
         {
             if(cin.eof())
+
                 // Exit the program.
+                
                 return 0;
+
             else
             {
                 cin.clear();
@@ -123,7 +127,6 @@ int main()
         
         if(!updateMaze(maze, toupper(direction)))
         {
-            cout << "Invalid move! Please pick a different direction." << endl;
             continue;
         }
         robotsMovement(maze, robots);
