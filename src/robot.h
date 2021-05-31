@@ -34,7 +34,7 @@ public:
      *
      * @param playerPos the human's position
      */
-    void seekHuman(const Position &player_pos);
+    void seekHuman(const Position &playerPos);
 
     void setPosition(const Position &pos);
     void setAsDead();
