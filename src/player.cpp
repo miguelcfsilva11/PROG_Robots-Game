@@ -45,8 +45,11 @@ char Player::getSymbol() const {
 
 }
 
+<<<<<<< HEAD
 /******************************************************************************/
 
+=======
+>>>>>>> 649420752986f47fb27dfa733101822274c3a6e9
 bool Player::isAlive() const {
 
     if (alive) {
@@ -57,6 +60,7 @@ bool Player::isAlive() const {
     }
 }
 
+<<<<<<< HEAD
 /******************************************************************************/
 
 void Player::setAsDead(){
@@ -80,4 +84,18 @@ void Player::move(Movement delta){
 
 Position Player::getPosition() const{
     return position;
+=======
+void Player::setAsDead(){
+
+    alive = false;
+
+}
+
+void Player::move(Movement delta){
+
+    row += delta.dRow;
+    col += delta.dCol;
+    
+
+>>>>>>> 649420752986f47fb27dfa733101822274c3a6e9
 }

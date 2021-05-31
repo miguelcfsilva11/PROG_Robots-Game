@@ -20,6 +20,7 @@ int Robot::getID() const
     return id;
 }
 
+<<<<<<< HEAD
 /******************************************************************************/
 
 char Robot::getSymbol() const
@@ -50,6 +51,32 @@ Position Robot::getPosition() const
 
 /******************************************************************************/
 
+=======
+char Robot::getSymbol() const
+{
+    if(alive)
+        return 'R';
+    else
+        return 'r';
+}
+
+int Robot::getRow() const
+{
+    return row;
+}
+
+int Robot::getCol() const
+{
+    return col;
+}
+
+Position Robot::getPosition() const
+{
+    Position pos = { row, col };
+    return pos;
+}
+
+>>>>>>> 649420752986f47fb27dfa733101822274c3a6e9
 bool Robot::isAlive() const
 {
     if(alive)
@@ -58,6 +85,7 @@ bool Robot::isAlive() const
         return false;
 }
 
+<<<<<<< HEAD
 /******************************************************************************/
 
 void Robot::setRow(int row)
@@ -142,4 +170,25 @@ void Robot::setAsDead()
 {
     alive = false;
     symbol = 'r';
+=======
+void Robot::setRow(int x)
+{
+    row = x;
+}
+
+void Robot::setCol(int y)
+{
+    col = y;
+}
+
+void Robot::setPosition(const Position &pos)
+{
+    row = pos.row;
+    col = pos.col;
+}
+
+void Robot::setAsDead()
+{
+    alive = false;
+>>>>>>> 649420752986f47fb27dfa733101822274c3a6e9
 }
