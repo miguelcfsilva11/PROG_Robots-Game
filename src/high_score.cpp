@@ -1,78 +1,28 @@
 // T05_G02
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <bits/stdc++.h>
+#include "high_score.h"
 
 using namespace std;
 
-/******************************************************************************/
 
-/**
-* Writes to the high scores file.
-*
-* @param fileName The name of the file to write to.
-* @param highScoresVector A vector cointaining pairs with an high score entry composed by a name and a time.
-*/
-void writeHighScores(string fileName, const vector<pair<string, int>> highScoresVector)
+highScores::highScores()
 {
-    ofstream file(fileName);
-    file << "Player         - Time\n----------------------\n";
-    for(auto i = 0; i < highScoresVector.size(); i++)
-    {
-        file << highScoresVector[i].first << "- " << highScoresVector[i].second << endl;
-    }
-    file.close();
+    vector<highScoreEntry> highScoreEntrys;
 }
 
 /******************************************************************************/
 
-/** 
-* Driver function to sort the vector elements
-* by second element of pairs.
-*/
-bool sortBySec(const pair<string,int> &a, const pair<string,int> &b)
+bool highScores::read(const string &filename)
 {
-    return (a.second < b.second);
-}
+    ifstream highScoresFile(filename);
 
-/******************************************************************************/
+    if(!highScoresFile.good())
+        return false;
 
-/**
-* Adds a new high score pair to
-* the vector containing the high scores
-* and sorts it in ascending order.
-*
-* @param highScoresVector A vector cointaining pairs with an high score entry composed by a name and a time.
-* @param name A string with the name of the user who beat the game.
-* @param time An integer with the time to beat the game.
-*/
-void addHighScore(vector<pair<string, int>>& highScoresVector, string name, int time)
-{
-    pair<string, int> highScore;
-    highScore.first = name;
-    highScore.second = time;
-    highScoresVector.push_back(highScore);
-    sort(highScoresVector.begin(), highScoresVector.end(), sortBySec);
-}
-
-/******************************************************************************/
-
-/**
-* Reads the high scores from a given file and stores a pair of
-* all the users and their high scores in a vector.
-*
-* @param fileName The name of the file to read from.
-* @param highScores A vector where the high score pairs will be stored.
-*/
-void readHighScores(string fileName, vector<pair<string, int>>& highScoresVector)
-{
-    ifstream highScoresFile(fileName);
     string line;
+    highScoreEntry highScore;
+    
     int i = 0;
-    pair<string, int> highScore;
     while(getline(highScoresFile, line))
     {
         if(i < 2)
@@ -82,23 +32,119 @@ void readHighScores(string fileName, vector<pair<string, int>>& highScoresVector
         }
 
         int separator = line.find('-');
-        highScore.first = line.substr(0, separator);
-        highScore.second = stoi(line.substr(separator + 2));
-        highScoresVector.push_back(highScore);
+        highScore.name = line.substr(0, separator);
+        highScore.time = stoi(line.substr(separator + 2));
+        highScoreEntrys.push_back(highScore);
 
-        i++;
+    }
 
+    return true;
+}
+
+/******************************************************************************/
+
+void highScores::write(const string &filename) const
+{
+    ofstream highScoresFile(filename);
+    highScoresFile << "Player         - Time\n----------------------\n";
+    for(size_t i = 0; i < highScoreEntrys.size(); i++)
+    {
+        highScoresFile << highScoreEntrys[i].name << "- " << highScoreEntrys[i].time << endl;
+    }
+    highScoresFile.close();
+}
+
+/******************************************************************************/
+
+void highScores::add(const string &name, const int &time)
+{
+    highScoreEntrys.push_back({ name, time });
+}
+
+/******************************************************************************/
+
+void highScores::sortHighScores()
+{
+    bool swap = true;
+    highScoreEntry tmp;
+    while(swap)
+    {
+        swap = false;
+        for(size_t i = 0; i < highScoreEntrys.size() - 1; i++)
+        {
+            if(highScoreEntrys[i].time > highScoreEntrys[i + 1].time)
+            {
+                swap = true;
+                tmp = highScoreEntrys[i];
+                highScoreEntrys[i] = highScoreEntrys[i + 1];
+                highScoreEntrys[i + 1] = tmp;
+            }
+        }
     }
 }
 
-/**
-* Creates an high scores file.
-*
-* @param filename The name of the file to be created.
-*/
-void createFile(std::string filename)
+string highScores::getName() const
 {
-    ofstream file(filename);
-    file << "Player         - Time\n----------------------\n";
-    file.close();
+    string playerName;
+    bool validName = false;
+    int nameLength;
+    const int MAX_NAME_LENGTH = 15;
+
+    while(!validName)
+    {
+        cout << "Enter your name (up to 15 characters): ";
+        getline(cin, playerName);
+        int nonAsciiChars = 0;
+        nameLength = 0;
+        bool hyphenChar = false;
+
+        // Count the length of the given name,
+        // taking into account the possibility
+        // of existing non-ascii characters.
+
+        for(int i = 0; playerName[i]; i++)
+        {
+            if(int(playerName[i]) >= 0)
+                nameLength++;
+            else
+                nonAsciiChars++;
+            if(playerName[i] == '-')
+            {
+                hyphenChar = true;
+                break;
+            }
+        }
+        nameLength += nonAsciiChars / 2;
+
+        // Check if the given name is whithin
+        // the allowed name length and if it does
+        // not contain any ' - '. We don't allow
+        // the use of this character because it
+        // would interfere with the reading of
+        // the high scores file.
+
+        if(nameLength > MAX_NAME_LENGTH)
+        {
+            cout << "Please enter a shorter name!" << endl;
+            continue;
+        }
+        if(hyphenChar)
+        {
+            cout << "Please don't enter a name with a '-'" << endl;
+            continue;
+        }
+        validName = true;
+    }
+
+    return playerName + string(MAX_NAME_LENGTH - nameLength, ' ');
+}
+    
+/******************************************************************************/
+
+void highScores::handle(const string &filename, const int &time)
+{
+    read(filename);
+    add(getName(), time);
+    sortHighScores();
+    write(filename);
 }

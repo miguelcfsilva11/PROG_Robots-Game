@@ -1,173 +1,454 @@
 // T05_G02
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-
 #include "game.h"
-#include "robots.h"
+
 using namespace std;
+
+Game::Game(const string &filename)
+{
+    ifstream mazeFile(filename);
+    string row;
+    int rowNumber = 0;
+
+    while (getline(mazeFile, row))
+    {
+        if (rowNumber < 1)
+        {
+
+            // First, we will separate the first line
+            // that we find into the two numbers needed
+            // to instatiate the maze (the number of rows
+            // and the number of cols that it has).
+
+            int separator = row.find('x');
+            int numRows = stoi(row.substr(0, separator));
+            int numCols = stoi(row.substr(separator + 1));
+
+            // Updating our Game's maze.
+
+            Maze maze(numRows, numCols);
+            this->maze = maze;
+
+            rowNumber++;
+            continue;
+            
+        }
+        
+        for(int colNumber = 0; colNumber < row.length(); colNumber++)
+        {
+            if(row[colNumber] == '*' || row[colNumber] == '+')
+            {
+
+                // The board representation of our maze
+                // starts on the second line of the opened file.
+                // With that in mind, we instatiate the row of our
+                // objects while subtracting '1' from it.
+
+                Post post({rowNumber - 1, colNumber}, row[colNumber]);
+                maze.addPost(post);
+            }
+
+            else if(row[colNumber] == 'R' || row[colNumber] == 'r')
+            {
+                Robot robot({rowNumber - 1, colNumber});
+                robots.push_back(robot);
+            }
+
+            else if(row[colNumber] == 'H' || row[colNumber] == 'h')
+            {
+                Player player({rowNumber - 1, colNumber});
+                this->player = player;
+            }
+            else if(row[colNumber] == 'O')
+            {
+                Gate gate ({rowNumber - 1, colNumber});
+                maze.addGate(gate);
+            }
+        }
+
+        rowNumber++;
+    }
+
+    mazeFile.close();
+
+}
 
 /******************************************************************************/
 
-/**
-* Looks for human's position on the maze and stores it.
-*
-* @return pair of integers with his coordinates.
-*/
-pair <int, int> findHuman (vector<string>& maze)
+bool Game::validMove(char direction)
 {
+    vector<Post> Posts = maze.getPosts();
+    Movement playerMove;
+    map<char, Movement> keyToMove;
 
-    int human_row, human_col; // Human's coordinates.
-    bool humanFound = false;
+    // Mapping the different keys to Movement structs
+    // that represent the directions to which the user
+    // wishes to move.
 
-    for(int row = 0; row < maze.size(); row++){
-        for(int col = 0; col < maze[row].size(); col++){
-            if (maze[row][col] == 'H'){
-                
-                // If we find the human, store his
-                // location in the following variables
-                // and update humanFound's value.
+    keyToMove['Q'] = {-1, -1};
+    keyToMove['W'] = {-1, 0};
+    keyToMove['E'] = {-1, 1};
+    keyToMove['A'] = {0, -1};
+    keyToMove['S'] = {0, 0};
+    keyToMove['D'] = {0, 1};
+    keyToMove['Z'] = {1, -1};
+    keyToMove['X'] = {1, 0};
+    keyToMove['C'] = {1, 1};
 
-                humanFound = true;
+    if(keyToMove.find(direction) == keyToMove.end())
 
-                human_row = row;
-                human_col = col;
-                break;
+        // In case the key that the user pressed
+        // is not found in our map, the iterator map::end
+        // is returned, meaning that the char selected
+        // is not valid.
 
+        return false;
+
+    playerMove = keyToMove[direction];
+
+    // Retrieve human's coordinates.
+
+    Position playerPos = player.getPosition();
+
+    for (size_t i = 0; i < robots.size(); i++)
+    {
+        Position robotPos = robots[i].getPosition();
+
+        if (robotPos.col == (playerPos.col + playerMove.dCol) && robotPos.row == (playerPos.row + playerMove.dRow))
+        {
+            char robotSymbol = robots[i].getSymbol();
+            if (robotSymbol == 'r')
+                return false;
+            if (robotSymbol == 'R')
+            {
+                player.move(playerMove);
+                player.setAsDead();
+                return true;
             }
         }
     }
 
-    if (!humanFound)
-        return make_pair(-1,-1);
-    else
-        return make_pair(human_row, human_col);
-}
-
-/******************************************************************************/
-
-/**
-* Checks whether the player is alive by evaluating 
-* his surroundings. In case he's in contact with either
-* a robot or a fence, then we must declare him dead.
-* 
-* @return true if the human is safe.
-* @return false in case he moved to the place of either a robot or a fence.
-*/
-bool isAlive(vector<string>& maze)
-{
-    // Retrieve human's coordinates.
-
-    int human_row, human_col;
-    human_row =  findHuman(maze).first;
-    human_col =  findHuman(maze).second;
-
-    if (human_row == -1 && human_col == -1)
-
+    for (size_t i = 0; i < Posts.size(); i++)
     {
 
-        // In case our human has been captured by the remanining robots
-        // the 'findHuman' function returns the pair (-1, -1). In those
-        // circumstances, we must declare our player as dead.
+        Position postPos = Posts[i].getPosition();
 
-        return false;
+        if (postPos.col == (playerPos.col + playerMove.dCol) && postPos.row == (playerPos.row + playerMove.dRow))
+        {
+            char postType = Posts[i].getSymbol();
+            if (postType == '+')
+                return false;
+
+            if (postType == '*')
+            {
+                player.setAsDead();
+                return true;
+            }
+        }
     }
 
+    player.move(playerMove);
     return true;
+
 }
 
 /******************************************************************************/
 
-/**
-* If possible, updates the coordinates
-* of the player, acording to the
-* direction chosen by the user.
-*
-* @param maze A vector containing information regarding the maze.
-* @param key A character which determines the direction the user is trying to move.
-*
-* @return false if the user moves to the place of an eletric fence or robot.
-* @return true if the user tried to move to a valid position.
-*/
-bool updateMaze(vector<string>& maze, char key)
+bool Game::play()
 {
-    // Retrieve human's coordinates.
+    vector<Post> Posts = maze.getPosts();
+    vector<Gate> Gates = maze.getGates();
+    map<int, Position> idToPosition;
 
-    int human_row, human_col;
-    human_row =  findHuman(maze).first;
-    human_col =  findHuman(maze).second;
+    while (player.isAlive()){
 
-    // Check to which direction the user
-    // wants to move and store it.
+        showGameDisplay();
+        cout << "\nPick a direction: ";
+        char direction = toupper(getChar());
 
-    int dir_row, dir_col;
-
-    switch(key)
-    {
-        case 'Q':
-            dir_row = -1;
-            dir_col = -1;
-            break;
-        case 'W':
-            dir_row = -1;
-            dir_col = 0;
-            break;
-        case 'E':
-            dir_row = -1;
-            dir_col = 1;
-            break;
-        case 'A':
-            dir_row = 0;
-            dir_col = -1;
-            break;
-        case 'S':
-            dir_row = 0;
-            dir_col = 0;
-            break;
-        case 'D':
-            dir_row = 0;
-            dir_col = 1;
-            break;
-        case 'Z':
-            dir_row = 1;
-            dir_col = -1;
-            break;
-        case 'X':
-            dir_row = 1;
-            dir_col = 0;
-            break;
-        case 'C':
-            dir_row = 1;
-            dir_col = 1;
-            break;
-            
-        default:
+        if(direction == 0)
             return false;
+            
+        else if(direction == 1)
+        {
+            cout << "Invalid direction! Please pick a new one." << endl;
+            continue;
+        }
+
+        if(!validMove(direction))
+        {
+            cout << "Can't go there! Avoid that obstacle!";
+            continue;
+        }
+
+        Position playerPos = player.getPosition();
+
+        for (size_t i = 0; i < robots.size(); i++){
+            
+            if (robots[i].getSymbol() == 'R')
+
+            // In case our robot has been destroyed,
+            // do not move it. It must remain stuck
+            // until the end of the game. Only move
+            // robots that are alive.
+
+            {
+                Position beforeRobotPos = robots[i].getPosition();
+                robots[i].seekHuman(playerPos);
+                
+                for (size_t j = 0; j < Posts.size(); j++)
+                {
+
+                    // Check each robot and see if it has
+                    // collided with an electrified fence
+                    // after moving it. Destroy it and move
+                    // it back to its original place in case
+                    // that happened.
+
+                    char postSymbol = Posts[j].getSymbol();
+                    
+                    if (collide(robots[i], Posts[j]))
+                    {
+                        robots[i].setAsDead();
+                        if (Posts[j].getSymbol() == '*')
+                        {
+                            // In case any robot moved to an
+                            // electrified post's position, declare
+                            // him dead on the spot it was before.
+
+                            robots[i].setPosition(beforeRobotPos);
+                        }
+                    }
+
+                }
+
+                for (size_t j = 0; j < Gates.size(); j++)
+                {
+
+                    // Apply that same logic to the exit gates,
+                    // where if a robot moves towards them and
+                    // actually collide with any of them, then
+                    // it must be destroyed and put back in his
+                    // original place.
+
+                    Position gatePos = Gates[j].getPosition();
+                    Position robotPos = robots[i].getPosition();
+
+                    if (robotPos.row == gatePos.row && robotPos.col == gatePos.col)
+                    {
+                        robots[i].setPosition(beforeRobotPos);
+                        robots[i].setAsDead();
+                    }
+                    
+                }
+
+                for (size_t j = 0; j < robots.size(); j++)
+                {
+                    if (i != j)
+
+                        // We can't call the collide function
+                        // on the same instance of a robot.
+
+                        if (collide(robots[i], robots[j]))
+                        {
+                            robots[i].setAsDead();
+                            robots[j].setAsDead();
+                        }
+                }
+
+                // Check each robot and see if it has
+                // collided with the player after moving it.
+                // Declared him dead in case that happens.
+
+                if (collide(robots[i], player))
+                {
+                    player.setAsDead();
+                    showGameDisplay();
+                    return false;
+                }
+
+            }
+
+        }
+
+        if (collide(player, Posts)){
+                player.setAsDead();
+                showGameDisplay();
+                return false;
+        }
+
+        if (reachedGate()){
+
+            // The game must end if the player
+            // reaches one of the maze's exit gates.
+            
+            return true;
+        }
+    }
+    
+    showGameDisplay();
+    return false;
+}
+
+/******************************************************************************/
+
+bool Game::reachedGate()
+{
+    vector<Gate> Gates = maze.getGates();
+    Position playerPos = player.getPosition();
+
+    for (size_t i = 0; i < Gates.size(); i++)
+    {
+        Position gatePos = Gates[i].getPosition();
+        if (gatePos.row == playerPos.row && gatePos.col == playerPos.col)
+            return true;
     }
 
-    // Update the Human's coordinates
-    // according to the direction.
+    return false;
+}
 
-    int new_human_row = human_row + dir_row;
-    int new_human_col = human_col + dir_col;
+/******************************************************************************/
 
-    // Check whether the new position
-    // results in the player's death.
+void Game::showGameDisplay() const
+{
+    int numCols = maze.getnumCols();
+    int numRows = maze.getnumRows();
+    int numElements = numCols * numRows;
 
-    if(maze[new_human_row][new_human_col] != ' ' && maze[new_human_row][new_human_col] != 'H'){
+    char board[numRows][numCols];
 
-        maze[new_human_row][new_human_col] = 'h';
-        maze[human_row][human_col] = ' ';
-        return false;
+    for (size_t i = 0; i < numRows; i++)
+    {
+
+        // Fill every row of the maze
+        // with blank spaces that will
+        // eventually be occupied by the
+        // objects of the maze.
+        
+        fill_n(board[i], numCols, ' '); 
     }
 
-    // Update the maze.
+    vector<Post> Posts = maze.getPosts();
+    vector<Gate> Gates = maze.getGates();   
 
-    maze[human_row][human_col] = ' ';
-    maze[new_human_row][new_human_col] = 'H';
+    for (size_t i = 0; i < Posts.size(); i++)
+    {
+        Position postPos = Posts[i].getPosition();
+        char postSymbol = Posts[i].getSymbol();
 
-    return true;
+        // Putting the posts in their
+        // respective places.
+
+        board[postPos.row][postPos.col] = postSymbol;
+
+    }
+
+    for (size_t i = 0; i < robots.size(); i++)
+    {
+        Position robotPos = robots[i].getPosition();
+        char robotSymbol = robots[i].getSymbol();
+
+        // Putting the robots in their
+        // respective places.
+
+        board[robotPos.row][robotPos.col] = robotSymbol;
+
+    }
+
+    Position playerPos = player.getPosition();
+    char playerSymbol = player.getSymbol();
+
+    // Spawning the human in his current position.
+
+    board[playerPos.row][playerPos.col] = playerSymbol;
+
+    for (size_t i = 0; i < Gates.size(); i++)
+    {
+        Position gatePos = Gates[i].getPosition();
+
+        // Displaying the maze's exit gates.
+
+        board[gatePos.row][gatePos.col] = 'O';
+
+    }
+
+    cout << "\nTHE MAZE\n";
+    for (int row = 0; row < numRows; row++)
+    {
+        for (int col = 0; col < numCols; col++)
+
+            // Printing the board elements
+            // to the console one by one.
+
+            cout << board[row][col];
+
+        cout << "\n";
+    }
+
+}
+
+/******************************************************************************/
+
+bool Game::collide(Robot &robot, Post& post)
+{
+    Position robotPos = robot.getPosition();
+    Position postPos = post.getPosition();
+
+    if (robotPos.row == postPos.row && robotPos.col == postPos.col)
+    {
+        return true;
+    }
+
+    return false;
+
+}
+
+/******************************************************************************/
+
+bool Game::collide(Player &player, vector<Post>& Posts)
+{
+    for (int i = 0; i < Posts.size(); i++){
+        Position playerPos = player.getPosition();
+        Position postPos = Posts[i].getPosition();
+
+        if (playerPos.row == postPos.row && playerPos.col == postPos.col)
+        {
+            return true;
+        }
+    }
+    
+    return false;
+
+}
+
+/******************************************************************************/
+
+bool Game::collide(Robot &robot, Player& player)
+{
+    Position playerPos = player.getPosition();
+    Position robotPos = robot.getPosition();
+
+    if (playerPos.row == robotPos.row && playerPos.col == robotPos.col)
+    {
+            return true;
+    }
+    
+    return false;
+
+}
+
+/******************************************************************************/
+
+bool Game::collide(Robot &firstRobot, Robot &secondRobot)
+{
+    Position firstRobotPos = firstRobot.getPosition();
+    Position secondRobotPos = secondRobot.getPosition();
+
+    if (firstRobotPos.row == secondRobotPos.row && firstRobotPos.col == secondRobotPos.col)
+    {
+        return true;
+    }
+
+    return false;
 
 }
