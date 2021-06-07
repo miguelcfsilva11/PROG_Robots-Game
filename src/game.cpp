@@ -20,7 +20,7 @@ Game::Game(const string &filename)
             // to instatiate the maze (the number of rows
             // and the number of cols that it has).
 
-            int separator = row.find('x');
+            size_t separator = row.find('x');
             int numRows = stoi(row.substr(0, separator));
             int numCols = stoi(row.substr(separator + 1));
 
@@ -34,7 +34,7 @@ Game::Game(const string &filename)
             
         }
         
-        for(int colNumber = 0; colNumber < row.length(); colNumber++)
+        for(int colNumber = 0; colNumber < row.size(); colNumber++)
         {
             if(row[colNumber] == '*' || row[colNumber] == '+')
             {

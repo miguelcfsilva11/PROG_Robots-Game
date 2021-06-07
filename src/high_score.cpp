@@ -31,7 +31,7 @@ bool highScores::read(const string &filename)
             continue;
         }
 
-        int separator = line.find('-');
+        size_t separator = line.find('-');
         highScore.name = line.substr(0, separator);
         highScore.time = stoi(line.substr(separator + 2));
         highScoreEntrys.push_back(highScore);
@@ -88,7 +88,7 @@ string highScores::getName() const
     string playerName;
     bool validName = false;
     int nameLength;
-    const int MAX_NAME_LENGTH = 15;
+    const unsigned __int64 MAX_NAME_LENGTH = 15;
 
     while(!validName)
     {

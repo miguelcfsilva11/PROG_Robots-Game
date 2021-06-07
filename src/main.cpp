@@ -25,7 +25,7 @@ int main()
     if(game.play())
     {
         cout << "You won!" << endl;
-        int secondsToWin = difftime(time(0), startTime);
+        int secondsToWin = lround(difftime(time(0), startTime));
         highScores highscores;
         highscores.handle(filename.substr(0, 7) + "_WINNERS.TXT", secondsToWin);
     }
