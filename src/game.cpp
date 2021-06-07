@@ -313,11 +313,13 @@ void Game::showGameDisplay() const
 {
     int numCols = maze.getnumCols();
     int numRows = maze.getnumRows();
-    int numElements = numCols * numRows;
+    
+    char** board = new char* [numRows];
 
-    char board[numRows][numCols];
+    for(int row = 0; row < numRows; row++)
+        board[row] = new char[numCols];
 
-    for (size_t i = 0; i < numRows; i++)
+    for (int row = 0; row < numRows; row++)
     {
 
         // Fill every row of the maze
@@ -325,7 +327,7 @@ void Game::showGameDisplay() const
         // eventually be occupied by the
         // objects of the maze.
         
-        fill_n(board[i], numCols, ' '); 
+        fill_n(board[row], numCols, ' '); 
     }
 
     vector<Post> Posts = maze.getPosts();
@@ -384,6 +386,11 @@ void Game::showGameDisplay() const
 
         cout << "\n";
     }
+
+    for(int row = 0; row < numRows; row++)
+        delete [] board[row];
+
+    delete [] board;
 
 }
 

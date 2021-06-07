@@ -82,7 +82,7 @@ private:
      * there is left on the maze, causing his death.
      *
      * @param robot A functioning robot there is still on the maze
-     * @param Posts A vector of Post objects that are present in the maze
+     * @param Posts A Post object that is present in the maze
      *
      * @return true if it collides with any of them
      * @return false if otherwise
