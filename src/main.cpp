@@ -1,6 +1,7 @@
 // T05_G02
 
 #include <time.h>
+#include <cmath>
 
 #include "movement.h"
 #include "menu.h"

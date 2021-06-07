@@ -88,7 +88,7 @@ string highScores::getName() const
     string playerName;
     bool validName = false;
     int nameLength;
-    const unsigned __int64 MAX_NAME_LENGTH = 15;
+    const unsigned long MAX_NAME_LENGTH = 15;
 
     while(!validName)
     {
