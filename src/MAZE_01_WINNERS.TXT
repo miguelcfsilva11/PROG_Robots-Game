@@ -1,0 +1,4 @@
+Player         - Time
+----------------------
+Miguel         - 6
+Pedro          - 10
