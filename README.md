@@ -2,4 +2,4 @@
 
 Project Grade: 19
 
-A simple game where bloodthirsty robots chase you in rather peculiar mazes (having OOP concepts in mind while creating it).
+A simple project that was made in one of FEUP's distinct programming courses (PROG), having OOP concepts in mind while creating it.
